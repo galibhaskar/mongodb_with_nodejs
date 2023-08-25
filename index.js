@@ -72,14 +72,31 @@ app.use(json());
 
 const insertNewHotel = async () => {
   let newHotelDoc = new hotelModel({
-    name: "My big hotel 2",
+    name: "My New big hotel",
     bedrooms: 2,
     bathrooms: 2,
     rating: 4.5,
-    email: "test@gmail.com",
+    email: "test123@gmail.com",
   });
 
   let result = await newHotelDoc.save();
+
+  console.log(result);
+};
+
+// write a function in mongoose where you first get the doc by name of the hotel
+// and update it with new rating
+
+// name, newRating
+
+const findAndUpdate = async (hotelName, newRating) => {
+  let hotelDoc = await hotelModel.findOne({ name: hotelName });
+
+  console.log(hotelDoc);
+
+  hotelDoc.rating = newRating;
+
+  let result = await hotelDoc.save();
 
   console.log(result);
 };
@@ -104,7 +121,9 @@ app.listen(PORT, async function () {
 
   // getTop2ByRating(mongodbClient);
 
-  await insertNewHotel();
+  // await insertNewHotel();
+
+  await findAndUpdate("My New big hotel", 5);
 
   console.log(`listening at port:${PORT}`);
 });
